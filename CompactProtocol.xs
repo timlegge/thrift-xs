@@ -588,7 +588,7 @@ CODE:
   if (SvROK(value)) {
     char string[25];
     STRLEN length;
-    length = sprintf(string, "%lld", zigzag_to_ll(varint));
+    length = sprintf(string, "%" PRId64, zigzag_to_ll(varint));
     sv_setpvn(SvRV(value), string, length);
   }
 }

@@ -742,7 +742,7 @@ CODE:
   if (SvROK(value)) {
     char string[25];
     STRLEN length;
-    length = sprintf(string, "%lld", (int64_t)(hi << 32) | lo);
+    length = sprintf(string, "%" PRId64, (int64_t)(hi << 32) | lo);
     sv_setpvn(SvRV(value), string, length);
   }
 }
