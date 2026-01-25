@@ -97,11 +97,12 @@ CODE:
 }
 
 void
-writeFieldBegin(TBinaryProtocol *p, SV * /*name*/, int type, int id)
+writeFieldBegin(TBinaryProtocol *p, SV *name, int type, int id)
 CODE:
 {
   DEBUG_TRACE("writeFieldBegin()\n");
   
+  PERL_UNUSED_VAR(name);
   if (unlikely(type == T_BOOL)) {
     // Special case, save type/id for use later
     p->bool_type = type;
@@ -362,7 +363,7 @@ CODE:
 }
 
 void
-readFieldBegin(TBinaryProtocol *p, SV * /*name*/, SV *fieldtype, SV *fieldid)
+readFieldBegin(TBinaryProtocol *p, SV *name, SV *fieldtype, SV *fieldid)
 CODE:
 {
   DEBUG_TRACE("readFieldBegin()\n");
@@ -370,6 +371,7 @@ CODE:
   SV *tmp;
   char *tmps;
   
+  PERL_UNUSED_VAR(name);
   // fieldtype byte
   READ_SV(p, tmp, 1);
   tmps = SvPVX(tmp);
