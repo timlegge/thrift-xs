@@ -292,13 +292,13 @@ CODE:
   READ_SV(p, tmp, 2);
   tmps = SvPVX(tmp);
   
-  int protocol_id = tmps[0];
-  if (protocol_id != PROTOCOL_ID) {
+  uint8_t protocol_id = (uint8_t) tmps[0];
+  if (protocol_id != (uint8_t) PROTOCOL_ID) {
     THROW_SV("Thrift::TException", newSVpvf("Expected protocol id %d but got %d", PROTOCOL_ID, protocol_id));
   }
   
-  int version_and_type = tmps[1];
-  int version = version_and_type & VERSION_MASK_COMPACT;
+  uint8_t version_and_type = (uint8_t) tmps[1];
+  uint8_t version = version_and_type & VERSION_MASK_COMPACT;
   if (version != VERSION_N) {
     THROW_SV("Thrift::TException", newSVpvf("Expected version id %d but got %d", VERSION_N, version));
   }
