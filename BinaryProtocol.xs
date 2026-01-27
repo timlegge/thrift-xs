@@ -129,13 +129,14 @@ OUTPUT:
   RETVAL
 
 int
-writeFieldBegin(TBinaryProtocol *p, SV * /*name*/, int type, int id)
+writeFieldBegin(TBinaryProtocol *p, SV *name, int type, int id)
 CODE:
 {
   DEBUG_TRACE("writeFieldBegin(type %d, id %d)\n", type, id);
   char data[3];
   RETVAL = 0;
   
+  PERL_UNUSED_VAR(name);
   data[0] = type & 0xff;      // byte
   data[1] = (id >> 8) & 0xff; // i16
   data[2] = id & 0xff;
@@ -487,7 +488,7 @@ OUTPUT:
   RETVAL
 
 int
-readFieldBegin(TBinaryProtocol *p, SV * /*name*/, SV *fieldtype, SV *fieldid)
+readFieldBegin(TBinaryProtocol *p, SV *name, SV *fieldtype, SV *fieldid)
 CODE:
 {
   DEBUG_TRACE("readFieldBegin()\n");
@@ -495,6 +496,7 @@ CODE:
   char *tmps;
   RETVAL = 0;
   
+  PERL_UNUSED_VAR(name);
   READ_SV(p, tmp, 1);
   tmps = SvPVX(tmp);
   RETVAL += 1;
@@ -740,7 +742,7 @@ CODE:
   if (SvROK(value)) {
     char string[25];
     STRLEN length;
-    length = sprintf(string, "%lld", (int64_t)(hi << 32) | lo);
+    length = sprintf(string, "%" PRId64, (int64_t)(hi << 32) | lo);
     sv_setpvn(SvRV(value), string, length);
   }
 }

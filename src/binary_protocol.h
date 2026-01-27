@@ -133,7 +133,7 @@ static const int32_t TYPE_SHIFT_AMOUNT = 5;
     uint32_t avail = buffer_len(p->mbuf->buffer);                                   \
     if (avail < len) {                                                              \
       THROW_SV("TTransportException",                                               \
-        newSVpvf("Attempt to readAll(%lld) found only %d available", (uint64_t)len, avail));    \
+        newSVpvf("Attempt to readAll(%lud) found only %d available", (uint64_t)len, avail));    \
     }                                                                               \
     dst = newSVpvn( buffer_ptr(p->mbuf->buffer), len );                             \
     buffer_consume(p->mbuf->buffer, len);                                           \
